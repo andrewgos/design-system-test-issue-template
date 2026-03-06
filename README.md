@@ -100,6 +100,8 @@ export default function App() {
 }
 ```
 
+> **Note:** Subpath imports such as `@moodlehq/design-system/button` are not currently supported. Please import components from `@moodlehq/design-system`.
+
 ### Fonts
 
 The recommended typeface for Moodle Design System is **[Roboto](https://fonts.google.com/specimen/Roboto)**. The package does not bundle font files. Provide Roboto in your application:
@@ -142,7 +144,21 @@ import '@moodlehq/design-system/tokens/css';
 
 // SCSS tokens
 import '@moodlehq/design-system/tokens/scss';
+
+// SCSS tokens (legacy Sass @import syntax)
+import '@moodlehq/design-system/tokens/scss/legacy';
 ```
+
+#### Legacy SCSS compatibility for Moodle Core LMS
+
+Tag: `MDS_LEGACY_SCSSPHP_COMPAT`
+
+MDS now ships an optional legacy SCSS entrypoint (`@moodlehq/design-system/tokens/scss/legacy`) that uses Sass `@import` syntax.
+
+- Use `@moodlehq/design-system/tokens/scss` (default) for modern Sass module syntax (`@use` / `@forward`).
+- Use `@moodlehq/design-system/tokens/scss/legacy` when integrating with Moodle Core LMS environments that still rely on older `scssphp` behavior.
+
+This legacy entrypoint is intended as a compatibility bridge until Core LMS completes a major `scssphp` library upgrade.
 
 > **Note:** SCSS tokens use flat values rather than variable references. This is an intentional design decision due to limitations in Style Dictionary's built-in `scssVariables` formatter, which does not support `@use` imports for cross-file variable references. While a custom formatter could address this, it would also need to handle proper variable hoisting and sorting, requiring significant ongoing maintenance.
 
@@ -212,6 +228,9 @@ Pull requests are our suggested method for contributing to the design system. Pl
 
 **Q:** Will my Moodle instance automatically use the latest Design System release?<br>
 **A:** This will depend on the upcoming integration we are looking into. You will likely need to update your Moodle instance once we integrate into LMS.
+
+**Q:** Can I import components via subpaths like `@moodlehq/design-system/button`?<br>
+**A:** Not currently. Please import components from `@moodlehq/design-system`.
 
 ## License
 
